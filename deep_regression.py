@@ -15,7 +15,7 @@ class DeepRegression(torch.nn.Module):
         super(DeepRegression, self).__init__()
 
         self.d_input = 99
-        self.d_inner = 10
+        self.d_inner = 100
         self.d_out = 1
 
         self.input_layer = nn.Linear(self.d_input, self.d_inner)
