@@ -14,8 +14,8 @@ class DeepRegression(torch.nn.Module):
     def __init__(self):
         super(DeepRegression, self).__init__()
 
-        self.d_input = 99
-        self.d_inner = 400
+        self.d_input = 23
+        self.d_inner = 100
         self.d_out = 1
 
         self.input_layer = nn.Linear(self.d_input, self.d_inner)
@@ -34,7 +34,7 @@ print("device: " + str(device))
 
 deep_regression = DeepRegression().to(device)
 
-batch_size = 64 * 4
+batch_size = 64
 
 df = pd.read_csv("clean_data/final_product.csv")
 
@@ -50,7 +50,7 @@ df = pd.read_csv("clean_data/final_product.csv")
 X = df.drop(["OilPeakRate"], axis=1)
 y = df["OilPeakRate"]
 
-print(X)
+# print(X)
 
 # def min_max_scaling(df):
 #     return (df - df.min()) / (df.max() - df.min())
@@ -81,7 +81,7 @@ class Data(Dataset):
         return self.len
     
 # Instantiate training and test data
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=.33, random_state=26)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=.2, random_state=26)
 
 train_data = Data(X_train, y_train)
 train_dataloader = DataLoader(dataset=train_data, batch_size=batch_size, shuffle=True)
