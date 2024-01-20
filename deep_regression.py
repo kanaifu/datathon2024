@@ -15,7 +15,7 @@ class DeepRegression(torch.nn.Module):
         super(DeepRegression, self).__init__()
 
         self.d_input = 99
-        self.d_inner = 100
+        self.d_inner = 400
         self.d_out = 1
 
         self.input_layer = nn.Linear(self.d_input, self.d_inner)
@@ -49,6 +49,8 @@ df = pd.read_csv("clean_data/final_product.csv")
 
 X = df.drop(["OilPeakRate"], axis=1)
 y = df["OilPeakRate"]
+
+print(X)
 
 # def min_max_scaling(df):
 #     return (df - df.min()) / (df.max() - df.min())
@@ -98,7 +100,7 @@ loss_fn = nn.MSELoss()
 
 optimizer = optim.SGD(deep_regression.parameters(), lr=0.005, momentum=0.0) # optim.RMSprop(model.parameters())
 
-num_epochs = 30
+num_epochs = 100
 
 min_loss = float('inf')
 
@@ -138,7 +140,7 @@ for X2, y in test_dataloader:
     
     pred = deep_regression(X2)
     loss = loss_fn(pred, y.unsqueeze(-1))
-    print(loss.item())
+    # print(loss.item())
     avg_loss += math.sqrt(loss.item())
 
 print("\nTest: " + str(avg_loss / cnt))
