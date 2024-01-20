@@ -14,8 +14,8 @@ class DeepRegression(torch.nn.Module):
     def __init__(self):
         super(DeepRegression, self).__init__()
 
-        self.d_input = 24
-        self.d_inner = 100
+        self.d_input = 99
+        self.d_inner = 400
         self.d_out = 1
 
         self.input_layer = nn.Linear(self.d_input, self.d_inner)
@@ -34,26 +34,28 @@ print("device: " + str(device))
 
 deep_regression = DeepRegression().to(device)
 
-batch_size = 64 *4
+batch_size = 64 * 4
 
-df = pd.read_csv("training.csv")
+df = pd.read_csv("clean_data/final_product.csv")
 
-columns_to_drop = ['standardized_operator_name', 'ffs_frac_type', 'relative_well_position',
-                   'batch_frac_classification', 'well_family_relationship', 'frac_type']  # Specify columns to remove
-df = df.drop(columns_to_drop, axis=1)  # axis=1 indicates columns
+# columns_to_drop = ['standardized_operator_name', 'ffs_frac_type', 'relative_well_position',
+#                    'batch_frac_classification', 'well_family_relationship', 'frac_type']  # Specify columns to remove
+# df = df.drop(columns_to_drop, axis=1)  # axis=1 indicates columns
 
-# replace NaNs
-for col in df.columns:
-    mode = df[col].mode().iloc[0]
-    df[col] = df[col].fillna(mode)
+# # replace NaNs
+# for col in df.columns:
+#     mode = df[col].mode().iloc[0]
+#     df[col] = df[col].fillna(mode)
 
 X = df.drop(["OilPeakRate"], axis=1)
 y = df["OilPeakRate"]
 
-def min_max_scaling(df):
-    return (df - df.min()) / (df.max() - df.min())
+print(X)
 
-X = min_max_scaling(X.copy())
+# def min_max_scaling(df):
+#     return (df - df.min()) / (df.max() - df.min())
+
+# X = min_max_scaling(X.copy())
 
 # print(X.shape)
 # print(y.shape)
@@ -98,7 +100,7 @@ loss_fn = nn.MSELoss()
 
 optimizer = optim.SGD(deep_regression.parameters(), lr=0.005, momentum=0.0) # optim.RMSprop(model.parameters())
 
-num_epochs = 30
+num_epochs = 100
 
 min_loss = float('inf')
 
@@ -138,7 +140,7 @@ for X2, y in test_dataloader:
     
     pred = deep_regression(X2)
     loss = loss_fn(pred, y.unsqueeze(-1))
-    print(loss.item())
+    # print(loss.item())
     avg_loss += math.sqrt(loss.item())
 
 print("\nTest: " + str(avg_loss / cnt))
