@@ -33,8 +33,9 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print("device: " + str(device))
 
 deep_regression = DeepRegression().to(device)
+deep_regression.load_state_dict(torch.load("models/cont_deep_regression.pth"))
 
-batch_size = 64 *4
+batch_size = 64
 
 df = pd.read_csv("training.csv")
 
@@ -87,49 +88,7 @@ train_dataloader = DataLoader(dataset=train_data, batch_size=batch_size, shuffle
 test_data = Data(X_test, y_test)
 test_dataloader = DataLoader(dataset=test_data, batch_size=batch_size, shuffle=True)
 
-# Check it's working
-for batch, (X, y) in enumerate(train_dataloader):
-    print(f"Batch: {batch+1}")
-    print(f"X shape: {X.shape}")
-    print(f"y shape: {y.shape}")
-    break
-
 loss_fn = nn.MSELoss()
-
-optimizer = optim.SGD(deep_regression.parameters(), lr=0.005, momentum=0.0) # optim.RMSprop(model.parameters())
-
-num_epochs = 30
-
-min_loss = float('inf')
-
-for epoch in tqdm(range(num_epochs)):
-    avg_loss = 0
-    cnt = 0
-    for X2, y in train_dataloader:
-        cnt += 1
-        # zero the parameter gradients
-        optimizer.zero_grad()
-       
-        # forward + backward + optimize
-        # print(X2)
-        pred = deep_regression(X2)
-        loss = loss_fn(pred, y.unsqueeze(-1))
-        # print(loss)
-        # print(pred)
-        # print(y)
-        # print(deep_regression.input_layer.weight)
-        avg_loss += math.sqrt(loss.item())
-        if loss.item() < min_loss:
-            min_loss = loss.item()
-            torch.save(deep_regression.state_dict(), "deep_regression.pth")
-        loss.backward()
-        nn.utils.clip_grad_norm_(deep_regression.parameters(), 5)
-        optimizer.step()
-        # time.sleep(1)
-    
-    print("\nEpoch (" + str(epoch) + "): " + str(avg_loss / cnt))
-
-print("Training Complete")
 
 avg_loss = 0
 cnt = 0
