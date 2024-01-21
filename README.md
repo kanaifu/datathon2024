@@ -7,11 +7,11 @@ Oil is ubiquitous. From the plastics used in smartphones to the gas that keeps o
 Given a vector of oil well characteristics, our project explored the use of three types of machine learning models to predict peak oil production. 
 
 ## How we built it
-**Parameter significance:** Using a correlation matrix, scatterplots, and box charts, we determined relative relevance towards predicting peak production.
-**Feature engineering:** We utilized the meaning of features to create new features like surface-to-bottom-distance, surface-to-bottom-angle, and neighboring-wells. These features ended up being key to improving the performance of our models. In addition to making new features, we also removed redundant features like proppant_to_frac_fluid_ratio which our models could compute on their own if helpful to improving performance. 
-**Formatting:** To make the dataset suitable for our models, we converted categorical variables to one-hot encodings and also added a category for variables with missing data.
-**Training:** We wrote code to train our models efficiently by exploiting the GPUs and taking the burden off the CPU.
-**Evaluate:** We split up our dataset into three parts: a training set, a testing set, and a validation set. Using RMSE to evaluate the performance of the models, the Deep Neural Net had a performance of 111.5 on the training set and 106.8 on the test set; the Boosted Trees had ### and ###; and Random Forests had 47.4 and 99.2.
+**Parameter significance:** Using a correlation matrix, scatterplots, and box charts, we determined relative relevance towards predicting peak production.  
+**Feature engineering:** We utilized the meaning of features to create new features like surface-to-bottom-distance, surface-to-bottom-angle, and neighboring-wells. These features ended up being key to improving the performance of our models. In addition to making new features, we also removed redundant features like proppant_to_frac_fluid_ratio which our models could compute on their own if helpful to improving performance.  
+**Formatting:** To make the dataset suitable for our models, we converted categorical variables to one-hot encodings and also added a category for variables with missing data.  
+**Training:** We wrote code to train our models efficiently by exploiting the GPUs and taking the burden off the CPU.  
+**Evaluate:** We split up our dataset into three parts: a training set, a testing set, and a validation set. Using RMSE to evaluate the performance of the models, the Deep Neural Net had a performance of 111.5 on the training set and 106.8 on the test set; the Boosted Trees had ### and ###; and Random Forests had 47.4 and 99.2.  
 **Validate:** The validation set helped us choose hyperparameters for our models.
 
 ## Challenges we ran into
