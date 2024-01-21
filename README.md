@@ -24,4 +24,4 @@ We put a lot of effort into our project and are proud of our work. In particular
 Over the course of the competitions, we encountered several challenges and learned a lot. We learned that real-world data can be sparse and it is often important to understand the meaning of features rather than blindly throwing statistical techniques at the data. While interpolating values, saw the dangers of interpolating spatial data as this can morph the data into representing impossible situations.
 
 ## What's next for Super Models Squared
-Get a vogue cover
+We hope that our work can contribute to making energy more affordable and reliable. In the future, we would like to apply our skills to solving problems and developing models that help pave the way for a more energy-efficient future.
